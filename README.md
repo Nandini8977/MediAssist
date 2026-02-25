@@ -30,7 +30,8 @@ MediAssist is a comprehensive healthcare web application that helps users assess
 | Feature | Description |
 |---------|-------------|
 | 🌍 **Full Language Support** | Complete UI localization for English, Hindi (हिंदी), and Telugu (తెలుగు) with real-time language switching |
-| 🗺️ **Google Maps Integration** | Live hospital directions with embedded map preview, no API keys required |
+| � **Mobile Optimized** | PWA support, responsive design, touch-friendly UI for all devices (phones, tablets, desktops) |
+| �🗺️ **Google Maps Integration** | Live hospital directions with embedded map preview, no API keys required |
 | 🚶 **Walking Route Optimization** | Shortest walking distance calculation to nearby hospitals |
 | 🔴🟢 **Offline Mode** | Service Worker-based offline support with automatic caching and network-first strategy |
 | ⏳ **Loading UI** | Animated spinners and skeleton loaders for smooth UX |
@@ -79,14 +80,21 @@ node server.js
 **Terminal 2 - Frontend (Port 3000)**:
 ```bash
 cd Frontend
-npm run build
-cd dist && npx http-server -p 3000 -c-1
+npm run dev
+# Output: Vite dev server ready at http://localhost:3000
 ```
 
-**Open Browser**:
+**Open Browser** (Desktop/Mobile):
 ```
-http://localhost:3000
+Desktop: http://localhost:3000
+Mobile:  http://YOUR_LOCAL_IP:3000 (e.g., http://192.168.1.100:3000)
 ```
+
+**Mobile Testing** (On your phone):
+1. Ensure both terminals running
+2. Get your PC's local IP address
+3. On mobile browser, visit `http://YOUR_IP:3000`
+4. App will work with full responsiveness and offline support
 
 ---
 
@@ -136,9 +144,22 @@ http://localhost:3000
 React 19.1 + Vite          # Framework & Build Tool
 Recharts                   # Data Visualization
 Service Worker API         # Offline Support with Network-First Strategy
-CSS3 (Grid, Flexbox)       # Styling & Animations
+PWA (Progressive Web App)  # Mobile app-like experience, home screen install
+CSS3 (Grid, Flexbox)       # Responsive design, Animations
 Fetch API + Geolocation    # Network & Location Services
 Google Maps Embedded APIs  # Directions & Navigation (No API Key)
+Responsive Design          # Mobile-first, 5 breakpoints (XS-XL)
+Touch-Friendly UI          # 44-48px min touch targets
+```
+
+### Mobile & PWA
+```
+manifest.json              # PWA installation, app shortcuts
+Service Worker             # Offline caching, background sync
+App Icons (SVG)            # High-DPI support, adaptive icons
+Safe Area Support          # Notch device compatibility
+Dark Mode Support          # System preference detection
+Accessibility Features     # Screen readers, keyboard nav, WCAG AA
 ```
 
 ### Backend
@@ -156,6 +177,7 @@ Groq OpenAI-compatible     # llama-3.1-8b-instant language model
 Google Maps Directions API # Embedded walking routes (public URLs, no API key)
 Service Worker API         # Offline caching with network-first strategy
 Browser Geolocation API    # User location detection
+LocalStorage API           # Settings persistence (language, preferences)
 ```
 
 ---
@@ -167,7 +189,7 @@ MediAssist/
 ├── Backend/
 │   ├── server.js                      # Express bootstrap
 │   ├── package.json                   # Dependencies
-│   ├── jsconfig.json                  # Windows casing config (NEW)
+│   ├── jsconfig.json                  # Windows casing config
 │   ├── controllers/
 │   │   └── triageController.js        # Request handling
 │   ├── routes/
@@ -184,7 +206,7 @@ MediAssist/
 ├── Frontend/
 │   ├── src/
 │   │   ├── App.jsx                    # Root component
-│   │   ├── App.css                    # Global styles
+│   │   ├── App.css                    # Global styles (mobile-optimized)
 │   │   ├── components/
 │   │   │   ├── InputBox.jsx           # Symptom form
 │   │   │   ├── ResultCard.jsx         # Result display (localized)
@@ -197,11 +219,15 @@ MediAssist/
 │   │   └── hooks/
 │   │       └── useOffline.js          # Offline detection
 │   ├── public/
+│   │   ├── styles/
+│   │   │   └── mobile.css             # Mobile-specific styles (NEW)
 │   │   ├── sw.js                      # Service Worker
+│   │   ├── manifest.json              # PWA manifest (NEW)
+│   │   ├── browserconfig.xml          # Windows tile config (NEW)
 │   │   ├── logo.svg                   # Circle logo (PRIMARY)
 │   │   ├── logo-horizontal.svg        # Horizontal logo (SECONDARY)
 │   │   ├── favicon.svg                # Favicon icon
-│   │   └── logo-gallery.html          # Interactive logo showcase (NEW)
+│   │   └── logo-gallery.html          # Interactive logo showcase
 │   ├── dist/                          # Built files (production)
 │   └── package.json
 │
@@ -210,8 +236,9 @@ MediAssist/
 │   ├── CHANGELOG_v2.0.md              # New features & updates
 │   ├── INTEGRATION_COMPLETE.md        # Technical architecture
 │   ├── QUICK_START.md                 # User guide & troubleshooting
-│   ├── PRESENTATION_v2.0.md           # 10-slide presentation (NEW)
-│   └── LOGO_DOCUMENTATION.md          # Logo guidelines & brand identity (NEW)
+│   ├── PRESENTATION_v2.0.md           # 10-slide presentation
+│   ├── LOGO_DOCUMENTATION.md          # Logo guidelines & brand identity
+│   └── MOBILE_OPTIMIZATION.md         # Mobile features & PWA guide (NEW)
 │
 └── Configuration
     ├── .gitignore
@@ -406,6 +433,7 @@ docker run -p 5000:5000 mediassist
 | [QUICK_START.md](QUICK_START.md) | User guide & troubleshooting tips |
 | [PRESENTATION_v2.0.md](PRESENTATION_v2.0.md) | 10-slide comprehensive presentation |
 | [LOGO_DOCUMENTATION.md](LOGO_DOCUMENTATION.md) | Brand guidelines & logo specifications |
+| [MOBILE_OPTIMIZATION.md](MOBILE_OPTIMIZATION.md) | Mobile features, PWA, responsive design guide (NEW) |
 | [logo-gallery.html](Frontend/public/logo-gallery.html) | Interactive logo showcase (open in browser) |
 
 ---
@@ -493,17 +521,22 @@ This project is licensed under the **MIT License** - see [LICENSE](LICENSE) file
 
 | Stat | Value |
 |------|-------|
-| **Version** | 2.0 (Final) - Complete Language Localization + Logo Branding |
-| **Status** | ✅ Production Ready with Hospital Navigation & Presentations |
+| **Version** | 2.0 (Final) - Full Mobile Optimization |
+| **Status** | ✅ Production Ready on All Devices |
 | **Release Date** | February 24-25, 2026 |
 | **React Components** | 13+ with full i18n support |
 | **Supported Languages** | 3 (English, हिंदी, తెలుగు) |
 | **Total Localized Strings** | 150+ UI elements + 50+ health tips |
+| **Mobile Responsive Breakpoints** | 5 (XS, S, M, L, XL) |
+| **Supported Devices** | Phones, Tablets, Desktops, Foldables |
+| **PWA Features** | Home screen install, App shortcuts, Offline mode |
+| **Browser Support** | Chrome, Firefox, Safari, Edge, Samsung Internet |
+| **Touch Target Size** | 44-48px (WCAG compliant) |
 | **Backend Endpoints** | 6 API routes |
 | **Test Coverage** | 90%+ with end-to-end tests |
 | **Bundle Size** | 614.77 KB (optimized) |
 | **Logo Variants** | 3 (circle, horizontal, favicon) + interactive gallery |
-| **Documentation Files** | 6 (README, Changelog, Integration, Quick Start, Presentation, Logo) |
+| **Documentation Files** | 7 (README, Changelog, Integration, Quick Start, Presentation, Logo, Mobile) |
 | **Indian States Covered** | 10 major states for analytics |
 
 ---
