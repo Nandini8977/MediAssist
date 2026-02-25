@@ -605,6 +605,20 @@
 	transition: all 0.3s;
 }
 
+.map-preview-card {
+	background: #ffffff;
+	padding: 12px;
+	border: 1px solid #e2e8f0;
+}
+
+.map-preview-frame {
+	width: 100%;
+	height: 320px;
+	border: 0;
+	border-radius: 12px;
+	box-shadow: inset 0 0 0 1px rgba(148, 163, 184, 0.35);
+}
+
 .hospital-card:hover {
 	box-shadow: 0 8px 16px rgba(15, 23, 42, 0.1);
 	transform: translateY(-2px);

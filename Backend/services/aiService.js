@@ -1,4 +1,4 @@
-const OpenAI = require("openai");
+const OpenAI = require("openai").default;
 
 const client = new OpenAI({
   apiKey: process.env.GROQ_API_KEY,
@@ -26,6 +26,51 @@ const fallbackContentByLanguage = {
       "దయచేసి మీ లక్షణాలను గమనించండి. లక్షణాలు తీవ్రమైతే లేదా పెరిగితే వెంటనే వైద్యుడిని సంప్రదించండి.",
     adviceHigh:
       "మీ లక్షణాలు తీవ్రమై ఉండవచ్చు. దయచేసి వెంటనే అత్యవసర వైద్య సహాయం పొందండి.",
+  },
+};
+
+const localizedResultByLanguage = {
+  English: {
+    HIGH: {
+      condition: "Possible serious cardiac or respiratory issue",
+      advice: "Seek emergency medical care immediately and call 108 if needed.",
+    },
+    MEDIUM: {
+      condition: "Possible moderate health concern requiring medical review",
+      advice: "Consult a doctor within 24 hours and monitor symptoms closely.",
+    },
+    LOW: {
+      condition: "Possible mild, non-urgent condition",
+      advice: "Rest, stay hydrated, and monitor symptoms for 3-5 days.",
+    },
+  },
+  Hindi: {
+    HIGH: {
+      condition: "संभावित गंभीर हृदय या श्वसन संबंधी समस्या",
+      advice: "तुरंत आपातकालीन चिकित्सा सहायता लें और आवश्यकता हो तो 108 पर कॉल करें।",
+    },
+    MEDIUM: {
+      condition: "संभावित मध्यम स्वास्थ्य समस्या, चिकित्सकीय जांच आवश्यक",
+      advice: "24 घंटों के भीतर डॉक्टर से मिलें और लक्षणों की करीबी निगरानी करें।",
+    },
+    LOW: {
+      condition: "संभावित हल्की, गैर-आपातकालीन स्थिति",
+      advice: "आराम करें, पर्याप्त पानी पिएं और 3-5 दिनों तक लक्षणों पर नज़र रखें।",
+    },
+  },
+  Telugu: {
+    HIGH: {
+      condition: "సంభావ్య తీవ్రమైన గుండె లేదా శ్వాసకోశ సమస్య",
+      advice: "వెంటనే అత్యవసర వైద్య సహాయం పొందండి మరియు అవసరమైతే 108కి కాల్ చేయండి.",
+    },
+    MEDIUM: {
+      condition: "సంభావ్య మధ్యస్థ ఆరోగ్య సమస్య, వైద్య పరీక్ష అవసరం",
+      advice: "24 గంటల్లో డాక్టర్‌ను సంప్రదించి లక్షణాలను జాగ్రత్తగా గమనించండి.",
+    },
+    LOW: {
+      condition: "సంభావ్య తేలికపాటి, అత్యవసరం కాని పరిస్థితి",
+      advice: "విశ్రాంతి తీసుకోండి, తగినంత నీరు తాగండి, 3-5 రోజుల పాటు లక్షణాలను గమనించండి.",
+    },
   },
 };
 
@@ -140,6 +185,31 @@ const sanitizeAIResponse = (value, language) => {
   };
 };
 
+const localizeResponseContent = (response, language) => {
+  if (!response || typeof response !== "object") {
+    return buildLocalizedFallback(language, "MEDIUM");
+  }
+
+  const selectedLanguage = fallbackContentByLanguage[language] ? language : "English";
+  const risk = allowedRisk.has(response.risk) ? response.risk : "MEDIUM";
+
+  if (selectedLanguage === "English") {
+    return {
+      risk,
+      condition: response.condition,
+      advice: response.advice,
+    };
+  }
+
+  const localized = localizedResultByLanguage[selectedLanguage][risk];
+
+  return {
+    risk,
+    condition: localized.condition,
+    advice: localized.advice,
+  };
+};
+
 const extractJSONObject = (text) => {
   const trimmed = text.trim();
 
@@ -218,15 +288,12 @@ Required risk based on rules: ${ruleBasedRisk}
 
   try {
     const parsed = sanitizeAIResponse(JSON.parse(jsonText), language);
-
-    if (parsed.risk !== ruleBasedRisk) {
-      return {
-        ...parsed,
-        risk: ruleBasedRisk,
-      };
-    }
-
-    return parsed;
+    const enforcedRisk = parsed.risk !== ruleBasedRisk ? ruleBasedRisk : parsed.risk;
+    const normalized = {
+      ...parsed,
+      risk: enforcedRisk,
+    };
+    return localizeResponseContent(normalized, language);
   } catch (err) {
     return riskAwareFallback;
   }

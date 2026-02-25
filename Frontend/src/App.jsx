@@ -66,12 +66,24 @@ function App() {
 
   // Register service worker for offline mode
   useEffect(() => {
-    if ("serviceWorker" in navigator) {
+    if (!("serviceWorker" in navigator)) {
+      return;
+    }
+
+    if (import.meta.env.PROD) {
       navigator.serviceWorker
         .register("/sw.js")
         .then(() => console.log("Service Worker registered"))
         .catch((err) => console.log("Service Worker registration failed:", err));
+      return;
     }
+
+    navigator.serviceWorker
+      .getRegistrations()
+      .then((registrations) => Promise.all(registrations.map((registration) => registration.unregister())))
+      .then(() => caches.keys())
+      .then((keys) => Promise.all(keys.map((key) => caches.delete(key))))
+      .catch((err) => console.log("Service Worker cleanup failed:", err));
   }, []);
 
   const analyzeSymptoms = async ({ symptoms, region }) => {
