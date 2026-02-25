@@ -10,9 +10,18 @@
 
 MediAssist is a comprehensive healthcare web application that helps users assess their medical symptoms through AI-powered triage, access health analytics, find nearby hospitals, and receive wellness education—with full offline support.
 
+## 🌐 Deploy Your Own
+
+**Deploy in 5 minutes for FREE:**
+
+1. **Backend**: Deploy to [Render](https://render.com) → [Deploy Guide](DEPLOYMENT.md#option-1-deploy-backend-to-rendercom)
+2. **Frontend**: Deploy to [Vercel](https://vercel.com) or [Netlify](https://netlify.com) → [Deploy Guide](DEPLOYMENT.md#option-2-deploy-frontend-to-vercel)
+
+See [DEPLOYMENT.md](DEPLOYMENT.md) for detailed instructions.
+
 ## ⚡ Quick Links
 
-- [Features](#-features) | [Installation](#-installation) | [Usage](#-usage) | [API](#-api-endpoints) | [Deployment](#-deployment) | [Documentation](#-documentation)
+- [Features](#-features) | [Installation](#-installation) | [Usage](#-usage) | [API](#-api-endpoints) | [Deployment](#-deployment)
 
 ---
 
@@ -382,36 +391,34 @@ All UI components have complete language support:
 
 ## 🚀 Deployment
 
-### Frontend - Vercel
+MediAssist can be deployed for **FREE** in under 5 minutes.
+
+### Quick Deploy
+
+**Backend (Render.com - Free)**
+- Sign up at [render.com](https://render.com)
+- Connect GitHub repository
+- Deploy from `Backend` folder
+- Add `GROQ_API_KEY` environment variable
+- Your API: `https://mediassist-api.onrender.com`
+
+**Frontend (Vercel - Free)**
 ```bash
 npm i -g vercel
 cd Frontend
 vercel deploy
 ```
+- Set environment: `VITE_API_BASE_URL=https://mediassist-api.onrender.com`
+- Your website: `https://mediassist.vercel.app`
 
-### Backend - Heroku
-```bash
-npm i -g heroku
-heroku login
-heroku create mediassist-api
-git push heroku main
-```
+### Complete Instructions
 
-### Docker (Optional)
-```dockerfile
-FROM node:22-alpine
-WORKDIR /app
-COPY package*.json ./
-RUN npm install
-COPY . .
-EXPOSE 5000
-CMD ["node", "server.js"]
-```
-
-```bash
-docker build -t mediassist .
-docker run -p 5000:5000 mediassist
-```
+📖 **See [DEPLOYMENT.md](DEPLOYMENT.md) for detailed step-by-step deployment guide** including:
+- Render backend deployment
+- Vercel/Netlify frontend deployment  
+- Environment variable configuration
+- Troubleshooting tips
+- Automatic redeployment setup
 
 ---
 
