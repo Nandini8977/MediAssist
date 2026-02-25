@@ -231,14 +231,7 @@ MediAssist/
 │   ├── dist/                          # Built files (production)
 │   └── package.json
 │
-├── Documentation/
-│   ├── README.md                      # This file
-│   ├── CHANGELOG_v2.0.md              # New features & updates
-│   ├── INTEGRATION_COMPLETE.md        # Technical architecture
-│   ├── QUICK_START.md                 # User guide & troubleshooting
-│   ├── PRESENTATION_v2.0.md           # 10-slide presentation
-│   ├── LOGO_DOCUMENTATION.md          # Logo guidelines & brand identity
-│   └── MOBILE_OPTIMIZATION.md         # Mobile features & PWA guide (NEW)
+├── README.md                          # This file (main documentation)
 │
 └── Configuration
     ├── .gitignore
@@ -270,8 +263,6 @@ MediAssist features a **professional, modern logo** combining healthcare and AI 
 - ⚙️ **Tech Nodes** - AI & innovation
 
 **View All Logos**: Open [logo-gallery.html](Frontend/public/logo-gallery.html) in your browser for an interactive logo gallery with color palettes and usage guidelines.
-
-**Documentation**: See [LOGO_DOCUMENTATION.md](LOGO_DOCUMENTATION.md) for detailed brand guidelines, ASCII art logos, and design specifications.
 
 ---
 
@@ -424,19 +415,6 @@ docker run -p 5000:5000 mediassist
 
 ---
 
-## 📚 Documentation
-
-| Document | Purpose |
-|----------|---------|
-| [CHANGELOG_v2.0.md](CHANGELOG_v2.0.md) | Detailed feature improvements & fixes |
-| [INTEGRATION_COMPLETE.md](INTEGRATION_COMPLETE.md) | Technical architecture & system design |
-| [QUICK_START.md](QUICK_START.md) | User guide & troubleshooting tips |
-| [PRESENTATION_v2.0.md](PRESENTATION_v2.0.md) | 10-slide comprehensive presentation |
-| [LOGO_DOCUMENTATION.md](LOGO_DOCUMENTATION.md) | Brand guidelines & logo specifications |
-| [MOBILE_OPTIMIZATION.md](MOBILE_OPTIMIZATION.md) | Mobile features, PWA, responsive design guide (NEW) |
-| [logo-gallery.html](Frontend/public/logo-gallery.html) | Interactive logo showcase (open in browser) |
-
----
 
 ## 🤝 Contributing
 
@@ -536,7 +514,6 @@ This project is licensed under the **MIT License** - see [LICENSE](LICENSE) file
 | **Test Coverage** | 90%+ with end-to-end tests |
 | **Bundle Size** | 614.77 KB (optimized) |
 | **Logo Variants** | 3 (circle, horizontal, favicon) + interactive gallery |
-| **Documentation Files** | 7 (README, Changelog, Integration, Quick Start, Presentation, Logo, Mobile) |
 | **Indian States Covered** | 10 major states for analytics |
 
 ---
